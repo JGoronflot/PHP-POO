@@ -36,7 +36,7 @@
          *
          * @return integer
          */
-        public function studentsByPromo(): int
+        public function countStudents(): int
         {
             return count($this->students);
         }
@@ -46,15 +46,9 @@
          *
          * @return integer
          */
-        public function womenByPromo(): int
+        public function countWomen(): int
         {
-            $nb_women = 0;
-            foreach($this->students as $value){
-                if($value->sex == "F"){
-                    $nb_women +=1;  
-                }
-            }
-            return $nb_women;
+            return $this->countGenre("F");
         }
 
         /**
@@ -62,15 +56,32 @@
          *
          * @return integer
          */
-        public function menByPromo(): int
+        public function countMen(): int
         {
-            $nb_men = 0;
-            foreach($this->students as $value){
-                if($value->sex == "H"){
-                    $nb_men +=1;  
+            return $this->countGenre();
+        }
+
+        /**
+         * Method which return the number of student by sexP
+         *
+         * @param String $genre
+         * @return integer
+         */
+        private function countGenre(String $genre = "H"): int
+        {
+            $cpt = 0;
+            foreach($this->students as $student){
+                if($genre == "H"){
+                    if($student->isMale()){
+                        $cpt++;
+                    }
+                } elseif ($genre == "F"){
+                    if(!$student->isMale()){
+                        $cpt++;
+                    }
                 }
             }
-            return $nb_men;
+            return $cpt;
         }
 
         /**
@@ -78,33 +89,19 @@
          *
          * @return integer
          */
-        public function womenPourcentageByPromo(): int
+        public function percentageWomen(): int
         {
-            $nb_women = 0;
-            foreach($this->students as $value){
-                if($value->sex == "F"){
-                    $nb_women +=1; 
-                }
-            }
-            $pourcentage_women = $nb_women * 100 / count($this->students);
-            return $pourcentage_women;
+            return $this->countWomen() * 100 / $this->countStudents();
         }
 
         /**
-         * Method which calculates the percentage of women in a promo
+         * Method which calculates the percentage of men in a promo
          *
          * @return integer
          */
-        public function menPourcentageByPromo(): int
+        public function percentageMen(): int
         {
-            $nb_men = 0;
-            foreach($this->students as $value){
-                if($value->sex == "H"){
-                    $nb_men +=1; 
-                }
-            }
-            $pourcentage_men = $nb_men * 100 / count($this->students);
-            return $pourcentage_men;
+            return $this->countMen() * 100 / $this->countStudents();
         }
 
         /**

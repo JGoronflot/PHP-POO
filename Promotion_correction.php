@@ -71,6 +71,26 @@
             return $cpt;
         }
 
+        /**
+         * Method which calculates the percentage of women in a promo
+         *
+         * @return integer
+         */
+        public function percentageWomen(): int
+        {
+            return $this->countWomen() * 100 / $this->countStudents();
+        }
+
+        /**
+         * Method which calculates the percentage of men in a promo
+         *
+         * @return integer
+         */
+        public function percentageMen(): int
+        {
+            return $this->countMen() * 100 / $this->countStudents();
+        }
+
 
 
 
@@ -88,4 +108,6 @@ $p = new Promotion($students);
 echo "Nombre d'étudiants : ".$p->countStudents();
 echo "<br>Nombre de femmes : ".$p->countWomen();
 echo "<br>Nombre d'hommes : ".$p->countMen();
+echo "<br>Nombre de femmes (%) : ".$p->percentageWomen();
+echo "<br>Nombre d'hommes (%) : ".$p->percentageMen();
 ?>
