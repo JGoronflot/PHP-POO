@@ -6,6 +6,41 @@
     {
         public $students;
 
+        /**
+         * Define the number of students
+         *
+         * @var int
+         */
+        public $countStudent;
+
+        /**
+         * Define the number of women
+         *
+         * @var int
+         */
+        public $countWomen;
+
+        /**
+         * Define the number of men
+         *
+         * @var int
+         */
+        public $countMen;
+
+        /**
+         * Define the number of ops
+         *
+         * @var int
+         */
+        public $countOps;
+
+        /**
+         * Define the number of dev
+         *
+         * @var int
+         */
+        public $countDev;
+
         // constructeur
         /**
          * Construct init
@@ -16,6 +51,11 @@
             Array $students
         ) {
             $this->students = $students;
+            $this->countStudent = $this->countStudents();
+            $this->countWomen = $this->countWomen();
+            $this->countMen = $this->countMen();
+            $this->countOps = $this->countOps();
+            $this->countDev = $this->countDev();
         }
 
         /**
@@ -49,7 +89,7 @@
         }
 
         /**
-         * Method which return the number of student by sexP
+         * Method which return the number of student by sex
          *
          * @param String $genre
          * @return integer
@@ -74,21 +114,84 @@
         /**
          * Method which calculates the percentage of women in a promo
          *
-         * @return integer
+         * @return Float
          */
-        public function percentageWomen(): int
+        public function percentageWomen(): Float
         {
-            return $this->countWomen() * 100 / $this->countStudents();
+            return $this->countWomen * 100 / $this->countStudent;
         }
 
         /**
          * Method which calculates the percentage of men in a promo
          *
+         * @return Float
+         */
+        public function percentageMen(): Float
+        {
+            return $this->countMen * 100 / $this->countStudent;
+        }
+
+        /**
+         * Method which calculates the number of OPS in a promo
+         *
          * @return integer
          */
-        public function percentageMen(): int
+        public function countOps(): int
         {
-            return $this->countMen() * 100 / $this->countStudents();
+            return $this->countSpecialty("OPS");
+        }
+
+        /**
+         * Method which calculates the number of DEV in a promo
+         *
+         * @return integer
+         */
+        public function countDev(): int
+        {
+            return $this->countSpecialty();
+        }  
+
+        /**
+         * Method which return the number of student by specialty
+         *
+         * @param String $specialty
+         * @return integer
+         */
+        private function countSpecialty(String $specialty = "DEV"): int
+        {
+            $cpt = 0;
+            foreach($this->students as $student){
+                if($specialty == "DEV"){
+                    if($student->isDev()){
+                        $cpt++;
+                    }
+                } elseif ($specialty == "OPS"){
+                    if(!$student->isDev()){
+                        $cpt++;
+                    }
+                }
+            }
+            return $cpt;
+        }
+
+        /**
+         * Method which calculates the percentage of Ops in a promo
+         *
+         * @return integer
+         */
+        public function percentageOps(): int
+        {
+            return $this->countOps * 100 / $this->countStudent;
+        }
+
+        /**
+         * Method which calculates the percentage of Dev in a promo
+         *
+         * @return integer
+         */
+        public function percentageDev(): int
+        {
+            return $this->countDev * 100 / $this->countStudent;
         }
 
 
@@ -110,4 +213,8 @@ echo "<br>Nombre de femmes : ".$p->countWomen();
 echo "<br>Nombre d'hommes : ".$p->countMen();
 echo "<br>Nombre de femmes (%) : ".$p->percentageWomen();
 echo "<br>Nombre d'hommes (%) : ".$p->percentageMen();
+echo "<br>Nombre de Ops : ".$p->countOps();
+echo "<br>Nombre de Dev : ".$p->countDev();
+echo "<br>Nombre de Ops (%) : ".$p->percentageOps();
+echo "<br>Nombre de Dev (%) : ".$p->percentageDev();
 ?>

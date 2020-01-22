@@ -199,7 +199,7 @@ Class Student
      *
      * @return boolean
      */
-    public function isDEV(): bool
+    public function isDev(): bool
     {
         if($this->speciality == "DEV"){
             return True;
