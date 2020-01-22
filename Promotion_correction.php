@@ -208,6 +208,42 @@
             return $total / $this->countStudent;
         }
 
+        /**
+         * Method which calculate the better average
+         *
+         * @return Student
+         */
+        public function bestStudent(): Student
+        {
+            $avg = 0;
+            $idx = null;
+            foreach($this->students as $key => $value){
+                if($value->marksAverage > $avg){
+                    $avg = $value->marksAverage;
+                    $idx = $key;
+                }
+            }
+            return $this->students[$idx];
+        }
+
+        /**
+         * Method which calculate the worst average
+         *
+         * @return Student
+         */
+        public function worstStudent(): Student
+        {
+            $avg = 20;
+            $idx = null;
+            foreach($this->students as $key => $value){
+                if($value->marksAverage < $avg){
+                    $avg = $value->marksAverage;
+                    $idx = $key;
+                }
+            }
+            return $this->students[$idx];
+        }
+
 
         // nombre d'élèves ayant uniquement le prénom contenant la lettre "u"
         // nombre d'élèves nés avant 1999
@@ -236,7 +272,9 @@ echo "<br>Nombre de Ops : ".$p->countOps;
 echo "<br>Nombre de Dev : ".$p->countDev;
 echo "<br>Nombre de Ops (%) : ".$p->percentageOps();
 echo "<br>Nombre de Dev (%) : ".$p->percentageDev();
-echo "<br>Moyenne de la promo (%) : ".$p->promotionAverage();
+echo "<br>Moyenne de la promo : ".$p->promotionAverage();
+echo "<br>Le meilleur élève est : ".$p->bestStudent()->firstName;
+echo "<br>Le pire élève est : ".$p->worstStudent()->firstName;
 
 
 
