@@ -193,6 +193,20 @@ Class Student
         return False;
     }
 
+    /**
+     * Method returning true if the current student
+     * is in DEV. False if the student is in OPS
+     *
+     * @return boolean
+     */
+    public function isDEV(): bool
+    {
+        if($this->speciality == "DEV"){
+            return True;
+        }
+        return False;
+    }
+
     
 }
 

@@ -62,7 +62,7 @@
         }
 
         /**
-         * Method which return the number of student by sexP
+         * Method which return the number of student by sex
          *
          * @param String $genre
          * @return integer
@@ -105,69 +105,61 @@
         }
 
         /**
-         * Method which calculates the number of students by specialty (Dev)
+         * Method which calculates the number of OPS in a promo
          *
          * @return integer
          */
-        public function DevByPromo(): int
+        public function countOps(): int
         {
-            $nb_dev = 0;
-            foreach($this->students as $value){
-                if($value->speciality == "DEV"){
-                    $nb_dev +=1; 
-                }
-            }
-            return $nb_dev;
+            return $this->countSpecialty("OPS");
         }
 
         /**
-         * Method which calculates the number of students by specialty (Ops)
+         * Method which calculates the number of DEV in a promo
          *
          * @return integer
          */
-        public function OpsByPromo(): int
+        public function countDev(): int
         {
-            $nbOps = 0;
-            foreach($this->students as $value){
-                if($value->speciality == "OPS"){
-                    $nbOps +=1; 
-                }
-            }
-            return $nbOps;
+            return $this->countSpecialty();
         }
+
         
-        /**
-         * Method which calculates the percentage of students by specialty (Dev)
-         *
-         * @return integer
-         */
-        public function DevPourcentageByPromo(): int
+        private function countSpecialty(String $specialty = "DEV"): int
         {
-            $nb_dev = 0;
-            foreach($this->students as $value){
-                if($value->speciality == "DEV"){
-                    $nb_dev +=1; 
+            $cpt = 0;
+            foreach($this->students as $student){
+                if($specialty == "DEV"){
+                    if($student->isDEV()){
+                        $cpt++;
+                    }
+                } elseif ($specialty == "OPS"){
+                    if(!$student->isDEV()){
+                        $cpt++;
+                    }
                 }
             }
-            $pourcentage_dev = $nb_dev * 100 / count($this->students);
-            return $pourcentage_dev;
+            return $cpt;
         }
-        
+
         /**
-         * Method which calculates the percentage of students by specialty (Dev)
+         * Method which calculates the percentage of Ops in a promo
          *
          * @return integer
          */
-        public function OpsPourcentageByPromo(): int
+        public function percentageOps(): int
         {
-            $nbOps = 0;
-            foreach($this->students as $value){
-                if($value->speciality == "OPS"){
-                    $nbOps +=1; 
-                }
-            }
-            $pourcentageOps = $nbOps * 100 / count($this->students);
-            return $pourcentageOps;
+            return $this->countOps() * 100 / $this->countStudents();
+        }
+
+        /**
+         * Method which calculates the percentage of Dev in a promo
+         *
+         * @return integer
+         */
+        public function percentageDev(): int
+        {
+            return $this->countDev() * 100 / $this->countStudents();
         }
 
         /**
@@ -382,15 +374,15 @@
     /**
      * Show different methods
      */
-    echo "Le nombre dans la promo est de ".$studentTest->studentsByPromo()." élèves.";
-    echo "<br>Le nombre de fille dans la promo est de ".$studentTest->womenByPromo()." élèves.";
-    echo "<br>Le nombre de garçon dans la promo est de ".$studentTest->menByPromo()." élèves.";
-    echo "<br>Le pourcentage de fille dans la promo est de ".$studentTest->womenPourcentageByPromo()."%.";
-    echo "<br>Le pourcentage de garçon dans la promo est de ".$studentTest->menPourcentageByPromo()."%.";
-    echo "<br>Le nombre de DEV dans la promo est de ".$studentTest->devByPromo().".";
-    echo "<br>Le nombre de OPS dans la promo est de ".$studentTest->opsByPromo().".";
-    echo "<br>Le pourcentage de DEV dans la promo est de ".$studentTest->womenPourcentageByPromo()."%.";
-    echo "<br>Le pourcentage de OPS dans la promo est de ".$studentTest->menPourcentageByPromo()."%.";
+    echo "Le nombre dans la promo est de ".$studentTest->countStudents()." élèves.";
+    echo "<br>Le nombre de femmes dans la promo est de ".$studentTest->countWomen()." élèves.";
+    echo "<br>Le nombre d'hommes dans la promo est de ".$studentTest->countMen()." élèves.";
+    echo "<br>Le pourcentage de femmes dans la promo est de ".$studentTest->percentageWomen()."%.";
+    echo "<br>Le pourcentage d'hommes dans la promo est de ".$studentTest->percentageMen()."%.";
+    echo "<br>Le nombre de OPS dans la promo est de ".$studentTest->countOps().".";
+    echo "<br>Le nombre de DEV dans la promo est de ".$studentTest->countDev().".";
+    echo "<br>Le pourcentage de OPS dans la promo est de ".$studentTest->percentageOps()."%.";
+    echo "<br>Le pourcentage de DEV dans la promo est de ".$studentTest->percentageDev()."%.";
     echo "<br>La moyenne de la promo est de ".$studentTest->averageByPromo().".";
     echo "<br>Le plus mauvais élève de la promo est ".$studentTest->minStudient()->firstName.".";
     echo "<br>Le meilleur élève de la promo est ".$studentTest->maxStudient()->firstName.".";
