@@ -293,7 +293,7 @@
             $AinName = 0;
             $ATab = [];
             foreach($this->students as $value){
-                if((strpos(strtolower($value->firstName), 'a') !== false)){
+                if((strpos(strtolower($value->firstName), 'a') !== false) || (strpos(strtolower($value->lastName), 'a') !== false)){
                     $ATab[] = $value;
                 }
             }
@@ -336,7 +336,7 @@
         }
 
         /**
-         * Method which returns number of students born after 2002
+         * Method which returns number of students born after 2001
          *
          * @return Array
          */ 
@@ -361,7 +361,7 @@
     $students = [
         new Student("Kévin", "Niel", "01/01/2003", "H", "DEV", [0, 10, 1, 0]),
         new Student("Enzo", "Daboss", "01/01/1995", "H", "DEV", [0, 0, 1, 0]),
-        new Student("Quentin", "Dafirst", "01/01/2000", "H", "DEV", [5, 0, 1, 0]),
+        new Student("Quentin", "Dufirst", "01/01/2000", "H", "DEV", [5, 0, 1, 0]),
         new Student("Eric", "Estmalade", "01/01/1984", "H", "DEV", [0, 18, 1, 4]),
         new Student("Charles", "Estenratard", "01/01/2010", "F", "OPS", [0, 3, 1, 0]),
     ];

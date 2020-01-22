@@ -73,7 +73,7 @@
          *
          * @return integer
          */
-        public function countWomen(): int
+        private function countWomen(): int
         {
             return $this->countGenre("F");
         }
@@ -83,7 +83,7 @@
          *
          * @return integer
          */
-        public function countMen(): int
+        private function countMen(): int
         {
             return $this->countGenre();
         }
@@ -136,7 +136,7 @@
          *
          * @return integer
          */
-        public function countOps(): int
+        private function countOps(): int
         {
             return $this->countSpecialty("OPS");
         }
@@ -146,7 +146,7 @@
          *
          * @return integer
          */
-        public function countDev(): int
+        private function countDev(): int
         {
             return $this->countSpecialty();
         }  
@@ -194,8 +194,27 @@
             return $this->countDev * 100 / $this->countStudent;
         }
 
+        /**
+         * Method which calculates the average of the promo
+         *
+         * @return Float
+         */
+        public function promotionAverage(): Float
+        {
+            $total = 0;
+            foreach($this->students as $student){
+                $total += $student->marksAverage;
+            }
+            return $total / $this->countStudent;
+        }
 
 
+        // nombre d'élèves ayant uniquement le prénom contenant la lettre "u"
+        // nombre d'élèves nés avant 1999
+        // nombre d'élèves nés après 2001
+        // ajouter un étudiant dans la promotion
+        // modifier un étudiant dans la promotion
+        // supprimer un étudiant dans la promotion
 
     }
 
@@ -209,12 +228,19 @@ $students = [
 
 $p = new Promotion($students);
 echo "Nombre d'étudiants : ".$p->countStudents();
-echo "<br>Nombre de femmes : ".$p->countWomen();
-echo "<br>Nombre d'hommes : ".$p->countMen();
+echo "<br>Nombre de femmes : ".$p->countWomen;
+echo "<br>Nombre d'hommes : ".$p->countMen;
 echo "<br>Nombre de femmes (%) : ".$p->percentageWomen();
 echo "<br>Nombre d'hommes (%) : ".$p->percentageMen();
-echo "<br>Nombre de Ops : ".$p->countOps();
-echo "<br>Nombre de Dev : ".$p->countDev();
+echo "<br>Nombre de Ops : ".$p->countOps;
+echo "<br>Nombre de Dev : ".$p->countDev;
 echo "<br>Nombre de Ops (%) : ".$p->percentageOps();
 echo "<br>Nombre de Dev (%) : ".$p->percentageDev();
+echo "<br>Moyenne de la promo (%) : ".$p->promotionAverage();
+
+
+
+
+
+
 ?>
