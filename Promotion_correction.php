@@ -215,15 +215,7 @@
          */
         public function bestStudent(): Student
         {
-            $avg = 0;
-            $idx = null;
-            foreach($this->students as $key => $value){
-                if($value->marksAverage > $avg){
-                    $avg = $value->marksAverage;
-                    $idx = $key;
-                }
-            }
-            return $this->students[$idx];
+            return $this->wbStudent("b");
         }
 
         /**
@@ -233,12 +225,31 @@
          */
         public function worstStudent(): Student
         {
-            $avg = 20;
+            return $this->wbStudent("w");
+        }
+
+        /**
+         * Method which returns whether the student is the best
+         * or the wostn depending on his marks average
+         *
+         * @param string $wb
+         * @return Student
+         */
+        private function wbStudent($wb = "b") : Student
+        {
             $idx = null;
+            $avg = $wb == "b" ? 0 : 20;
             foreach($this->students as $key => $value){
-                if($value->marksAverage < $avg){
-                    $avg = $value->marksAverage;
-                    $idx = $key;
+                if($wb == "b"){
+                    if($value->marksAverage > $avg){
+                        $avg = $value->marksAverage;
+                        $idx = $key;
+                    }
+                }else{
+                    if($value->marksAverage < $avg){
+                        $avg = $value->marksAverage;
+                        $idx = $key;
+                    }
                 }
             }
             return $this->students[$idx];
